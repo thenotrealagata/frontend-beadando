@@ -4,3 +4,5 @@
 [] eltartottak száma komponens
 [] lehessen több embert hozzáadni, elvenni stb
 [] háztartás összesített jövedelme komponens
+[] kedvezményezett bug: engedi kedvezményezett>eltartottak
+[] törlés még nem működik

@@ -31,7 +31,7 @@ export function Toggle({ label, value, setValue }) {
 
 export function StepInput ({ number, setNumber, min, max }) {
   function add(n) {
-    if (max && number + n > max) setNumber(max);
+    if (max >= 0 && number + n > max) setNumber(max);
     else if (number + n < (min ?? 0)) setNumber(min);
     else setNumber(number + n);
   }
