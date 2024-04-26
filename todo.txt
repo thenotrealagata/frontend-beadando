@@ -1,0 +1,6 @@
+[] nettó bér kiszámítása
+[] adókedvezmények hozzáadása
+[] jogosult-e friss házasok
+[] eltartottak száma komponens
+[] lehessen több embert hozzáadni, elvenni stb
+[] háztartás összesített jövedelme komponens
