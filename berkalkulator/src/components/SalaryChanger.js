@@ -10,12 +10,12 @@ export function SalaryChanger({ grossSalary, setGrossSalary }) {
   
     return(
       <div>
-        <input type="range" min="0" max="1000000" value={grossSalary} className="range range-primary" onChange={handleGrossSalaryChange}/>
-        <div className="w-100 mx-auto mt-3">
-          <button className="btn btn-primary mx-2" onClick={() => manipulateValue(-1)}>-1%</button>
-          <button className="btn btn-primary mx-2" onClick={() => manipulateValue(-5)}>-5%</button>
-          <button className="btn btn-primary mx-2" onClick={() => manipulateValue(1)}>+1%</button>
-          <button className="btn btn-primary mx-2" onClick={() => manipulateValue(5)}>+5%</button>
+        <input type="range" min="0" max="1500000" value={grossSalary} className="range range-primary" onChange={handleGrossSalaryChange}/>
+        <div className="grid grid-cols-4 place-content-center mt-3">
+          <button className="btn btn-primary mx-5" onClick={() => manipulateValue(-1)}>-1%</button>
+          <button className="btn btn-primary mx-5" onClick={() => manipulateValue(-5)}>-5%</button>
+          <button className="btn btn-primary mx-5" onClick={() => manipulateValue(1)}>+1%</button>
+          <button className="btn btn-primary mx-5" onClick={() => manipulateValue(5)}>+5%</button>
         </div>
       </div>
     );

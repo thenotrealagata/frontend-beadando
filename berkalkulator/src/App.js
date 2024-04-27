@@ -11,7 +11,7 @@ function Person({ person, setPerson, deletePerson }) {
     setPerson(newPerson);
   }
 
-  function calculateNetSalary() {
+  useEffect(() => {
     let szja = person.grossSalary * 0.15;
     const tb = person.grossSalary * 0.185;
     let reduction = 0;
@@ -46,16 +46,15 @@ function Person({ person, setPerson, deletePerson }) {
         case 3:
           factor = 33000;
           break;
+        default:
+          factor = 0;
+          break;
       }
 
       reduction += factor * person.numberofDependants;
     }
 
     setValue('netSalary', Math.round(person.grossSalary - Math.max(szja + tb - reduction, 0)));
-  }
-
-  useEffect(() => {
-    calculateNetSalary();
   }, [person.grossSalary, person.under25Reduction, person.isMarriageRecent, person.personalReduction, person.familyTaxReduction, person.numberofDependants, person.numberOfBeneficiaries])
 
   return(
@@ -105,7 +104,12 @@ function Household() {
   }]);
   const [selectedPerson, setSelectedPerson] = useState(0);
 
+  useEffect(() => {
+    setSelectedPerson(people[people.length - 1].id);
+  }, [people.length, id])
+
   function newPerson() {
+    setId(id+1);
     return {
       id: id,
       name: "",
@@ -122,33 +126,33 @@ function Household() {
   }
 
   function addPerson() {
-    setId(id+1);
     setPeople([...people, newPerson()]);
   }
 
   function editPerson(newPerson) {
-    setPeople(people.map(person => person.id == newPerson.id ? newPerson : person));
+    setPeople(people.map(person => person.id === newPerson.id ? newPerson : person));
   }
   
   function deleteCurrentPerson() {
-    if (people.length == 1) {
+    if (people.length === 1) {
       const newPerson2 = newPerson();
       setPeople([newPerson2]);
+    } else {
+      setPeople([...people.filter(person => person.id !== selectedPerson)]);
     }
-    setPeople(people.filter(person => person.id != selectedPerson));
-    setSelectedPerson(people[0].id);
+    
   }
 
   return (
     <div>
       <div className='flex flex-auto mx-auto mb-2'>
         {people.map(person => {
-          return(<button className="btn btn-primary uppercase mx-1" onClick={() => setSelectedPerson(person.id) }>{person.name}</button>);
+          return(<button key={person.id} className="btn btn-primary uppercase mx-1" onClick={() => setSelectedPerson(person.id) }>{person.name}</button>);
         })}
         <button className="btn btn-outline btn-primary mx-1" onClick={addPerson}>+</button>
       </div>
       <div className='flex flex-auto'>
-        <Person person={people[selectedPerson]} setPerson={(value) => editPerson(value)} deletePerson={deleteCurrentPerson}></Person>
+        {people.find(person => person.id === selectedPerson) && <Person person={people.find(person => person.id === selectedPerson)} setPerson={(value) => editPerson(value)} deletePerson={deleteCurrentPerson}></Person>}
         <div className='container bg-neutral-content rounded w-2/5 mx-auto p-5'>
           <h1 className="text-2xl font-bold uppercase mb-2">Háztartás összesített jövedelme</h1>
           <div className="overflow-x-auto">
@@ -162,7 +166,7 @@ function Household() {
             <tbody>
               {people.map(person => {
                 return(
-                  <tr>
+                  <tr key={person.id}>
                     <td>{person.name}</td>
                     <td>{person.netSalary} Ft</td>
                   </tr>

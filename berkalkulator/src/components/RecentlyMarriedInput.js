@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from './FormControls';
 
 export function RecentlyMarriedInput ({ isValid, setIsValid }) {
-    const [date, setDate] = useState(new Date(2000, 1, 1));
+    const [date, setDate] = useState();
   
     useEffect(() => {
       const convertedDate = new Date(date);
@@ -11,7 +11,7 @@ export function RecentlyMarriedInput ({ isValid, setIsValid }) {
   
       if(convertedDate > todayDate) setDate(todayDate.toISOString().substring(0, 10));
       setIsValid(earliestValidDate <= new Date(date));
-    },[date])
+    }, [date])
   
     return(
       <div className='flex'>
@@ -27,8 +27,7 @@ export function RecentlyMarriedInput ({ isValid, setIsValid }) {
         </dialog>
         <div className='mb-2'>
           {isValid && <div className="badge badge-success gap-2">Jogosult</div>}
-          {(isValid == false) && <div className="badge badge-error gap-2">Nem jogosult</div>}
-          {(isValid == null) && <div className="badge badge-warning gap-2">Nincs adat</div>}
+          {!isValid && <div className="badge badge-error gap-2">Nem jogosult</div>}
         </div>
       </div>
     );
