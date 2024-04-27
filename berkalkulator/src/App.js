@@ -29,7 +29,7 @@ function Person({ person, setPerson, deletePerson }) {
       reduction += 77300;
     }
 
-    if (person.isMarriageRecent) {
+    if (person.isMarriageRecent && person.recentlyMarriedReduction) {
       reduction += 5000;
     }
 
@@ -55,7 +55,7 @@ function Person({ person, setPerson, deletePerson }) {
     }
 
     setValue('netSalary', Math.round(person.grossSalary - Math.max(szja + tb - reduction, 0)));
-  }, [person.grossSalary, person.under25Reduction, person.isMarriageRecent, person.personalReduction, person.familyTaxReduction, person.numberofDependants, person.numberOfBeneficiaries])
+  }, [person.grossSalary, person.under25Reduction, person.recentlyMarriedReduction, person.isMarriageRecent, person.personalReduction, person.familyTaxReduction, person.numberofDependants, person.numberOfBeneficiaries])
 
   return(
     <div className='container bg-neutral-content rounded w-2/5 mx-auto p-5'>
